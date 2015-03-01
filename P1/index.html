@@ -1,0 +1,161 @@
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        
+        <script src="js/d3.v3.min.js"></script>
+        <script src="js/radialBarChart.js"></script>
+        
+        <style>
+            /* put a border around the svg element so we can see the coordinate system better. */
+            body { font-family: "Open Sans"; } div { margin: 30px; }
+            svg { border: solid black 1px; }
+            /* The default styles for axis elements stink. What should they be? */
+            .axis path { fill: none; stroke: #777; }
+            .axis line { stroke: #777; }
+            
+            #chart {
+              font-family: "Palatino";
+              font-size: 14px;
+            }
+            #chart path {
+              fill: none;
+            }
+
+            /* Outer circle, tick-circles and spokes */
+            #chart circle.outer {
+              stroke: #aaa;
+              stroke-width: 5px;
+              opacity: 0.5;
+            }
+            #chart .tick-circles circle {
+              stroke: #ddd;
+              stroke-dasharray: 2, 2;  
+            }
+            #chart .spokes line {
+              stroke: #666;
+              stroke-width: 0.2;
+            }
+
+            /* Labels */
+            #chart .labels text {
+              fill: #333;
+              font-size: 12px;
+              font-weight: 1000;
+            }
+        </style>
+    </head>
+<body>
+
+    <div id="canvas"></div>
+    <div id="canvas2"></div>
+    <div id="chart"></div>
+    
+    <script>
+        var stolenData;
+        var colors     = ["aqua", "aquamarine",       "blue",  "blueviolet", "CadetBlue",     "Coral",   "DarkViolet",   "DeepPink",     "Gold",      "Tan",   "StaleGray",   "Salmon", "Red"];
+        var categories = [ "web",     "retail", "healthcare",   "transport",      "tech", "financial",   "government",     "energy", "academic", "telecoms",      "gaming", "military", "media"];
+
+        d3.json("data/StolenData.json", function (error, data) {
+            //First Graph ranging to all stolen records
+            stolenData = data;
+
+            var maxRecords = d3.max(stolenData, 
+            function (d) {
+                return d.StolenRecords;
+            });
+
+            var maxYear = d3.max(stolenData, 
+            function (d) {
+                return d.Year;
+            });
+
+            var minYear = d3.min(stolenData, 
+            function (d) {
+                return d.Year;
+            });
+
+            var svg = d3.select("#canvas").append("svg")
+            .attr("height", 400)
+            .attr("width", 900);
+
+            var xScale = d3.scale.linear().domain([minYear - 1,maxYear + 1])
+            .range([100, 870]);
+            var yScale = d3.scale.linear().domain([0, maxRecords]).range([370,30]);
+            
+            var xAxis = d3.svg.axis().scale(xScale)
+            .orient("bottom");
+            var yAxis = d3.svg.axis().scale(yScale)
+            .orient("left");
+            
+            svg.append("g").attr("class", "axis")
+            .attr("transform", "translate(0,370)")
+            .call(xAxis);
+            svg.append("g").attr("class", "axis")
+            .attr("transform", "translate(" + 100 + ",0)")
+            .call(yAxis);
+            
+            var contents = svg.append("g");
+            
+            var circles = svg.selectAll("circle").data(stolenData)
+                .enter().append("circle");
+            
+            circles.attr("cx", function(d) { return xScale(d.Year) })
+                .attr("cy", function(d) { return yScale(d.StolenRecords) })
+                .attr("r", 10)
+                .attr("opacity", 0.3)
+                .style("fill", function (d) {return colors[categories.indexOf(d.Category)]});
+
+            //Second graph from only 1 to 1,000,000 records
+            var svg2 = d3.select("#canvas2").append("svg")
+            .attr("height", 400)
+            .attr("width", 900);
+
+            var xScale2 = d3.scale.linear().domain([minYear - 1,maxYear + 1])
+            .range([100, 870]);
+            var yScale2 = d3.scale.linear().domain([0, 1000000]).range([370,30]);
+            
+            var xAxis2 = d3.svg.axis().scale(xScale2)
+            .orient("bottom");
+            var yAxis2 = d3.svg.axis().scale(yScale2)
+            .orient("left");
+            
+            svg2.append("g").attr("class", "axis")
+            .attr("transform", "translate(0,370)")
+            .call(xAxis2);
+            svg2.append("g").attr("class", "axis")
+            .attr("transform", "translate(" + 100 + ",0)")
+            .call(yAxis2);
+            
+            var contents2 = svg2.append("g");
+            
+            var circles2 = svg2.selectAll("circle").data(stolenData)
+                .enter().append("circle");
+            
+            circles2.attr("cx", function(d) { return xScale2(d.Year) })
+                .attr("cy", function(d) { return yScale2(d.StolenRecords) })
+                .attr("r", 10)
+                .attr("opacity", 0.3)
+                .style("fill", function (d) {return colors[categories.indexOf(d.Category)]});
+        });
+
+        //Code for radial bar graph
+        d3.json('data/BMPrice.json', function(err, data) {
+            var chart = radialBarChart()
+            .barHeight(220)
+            .reverseLayerOrder(true)
+            .capitalizeLabels(true)
+            .barColors(['#B66199', '#9392CB', '#76D9FA'])
+            .domain([0,35])
+            .colorLabels(true)
+            .tickValues([5,10,15,20,25,30])
+            .tickCircleValues([5,10,15,20,25,30]);
+
+          d3.select('#chart')
+            .datum(data)
+            .call(chart);
+        });
+    </script>
+
+</body>
+</html>
