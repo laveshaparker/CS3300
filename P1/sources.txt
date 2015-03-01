@@ -1,0 +1,2 @@
+Sources:
+CSS and JS files for Radiual Bar Graph from: https://github.com/prcweb/d3-radialbar
