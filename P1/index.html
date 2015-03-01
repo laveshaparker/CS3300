@@ -100,7 +100,7 @@
             var circles = svg.selectAll("circle").data(stolenData)
                 .enter().append("circle");
             
-            circles.attr("cx", function(d) { return xScale(d.Year) })
+            circles.attr("cx", function(d) { return xScale(d.Year + d.Name.charCodeAt(0) / 128) })
                 .attr("cy", function(d) { return yScale(d.StolenRecords) })
                 .attr("r", 10)
                 .attr("opacity", 0.3)
@@ -132,7 +132,7 @@
             var circles2 = svg2.selectAll("circle").data(stolenData)
                 .enter().append("circle");
             
-            circles2.attr("cx", function(d) { return xScale2(d.Year) })
+            circles2.attr("cx", function(d) { return xScale2(d.Year + d.Name.charCodeAt(0) / 128) })
                 .attr("cy", function(d) { return yScale2(d.StolenRecords) })
                 .attr("r", 10)
                 .attr("opacity", 0.3)
