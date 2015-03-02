@@ -57,12 +57,15 @@
     <div id="data-compromised" class="panel more">
         <div class="visualization less">
             <!-- <img src="images/bar-radar-alternate.png" /> -->
-            <svg id="Fullz"></svg>
-            <svg id="BankAccount"></svg>
-            <svg id="FreshCreditCard"></svg>
-            <svg id="StaleCreditCard"></svg>
-            <svg id="HealthCredentials"></svg>
-            <svg id="Passwords"></svg>
+            <svg id="healthcare"></svg>
+            <svg id="media"></svg>
+            <svg id="financial"></svg>
+            <svg id="web"></svg>
+            <svg id="retail"></svg>
+            <svg id="tech"></svg>
+            <svg id="government"></svg>
+            <svg id="academic"></svg>
+            <svg id="telecoms"></svg>
                 
         </div>
 
@@ -81,13 +84,15 @@
             poor_security = 4;
 
         var hackMethods = {
-            "Fullz" : [0, 0, 0, 0, 0],
-            "BankAccount" : [0, 0, 0, 0, 0],
-            "FreshCreditCard"  : [0, 0, 0, 0, 0],
-            "StaleCreditCard" : [0, 0, 0, 0, 0],
-            "HealthCredentials" : [0, 0, 0, 0, 0],
-            "Passwords" : [0, 0, 0, 0, 0],
-            "Other" : [0, 0, 0, 0, 0],
+            "healthcare" : [0, 0, 0, 0, 0],
+            "media" : [0, 0, 0, 0, 0],
+            "financial"  : [0, 0, 0, 0, 0],
+            "web" : [0, 0, 0, 0, 0],
+            "retail" : [0, 0, 0, 0, 0],
+            "tech" : [0, 0, 0, 0, 0],
+            "government" : [0, 0, 0, 0, 0],
+            "academic" : [0, 0, 0, 0, 0],
+            "telecoms" : [0, 0, 0, 0, 0],
         };
         var colors     = ["aqua", "aquamarine",       "blue",  "blueviolet", "CadetBlue",     "Coral",   "DarkViolet",   "DeepPink",     "Gold",      "Tan",   "StaleGray",   "Salmon", "Red"];
         var categories = [ "web",     "retail", "healthcare",   "transport",      "tech", "financial",   "government",     "energy", "academic", "telecoms",      "gaming", "military", "media"];
@@ -183,39 +188,48 @@
                 updateHelper(stolenData[i]);
             };
 
-            createBar(hackMethods.Fullz, "Fullz");
-            createBar(hackMethods.BankAccount, "BankAccount");
-            createBar(hackMethods.FreshCreditCard, "FreshCreditCard");
-            createBar(hackMethods.StaleCreditCard, "StaleCreditCard");
-            createBar(hackMethods.HealthCredentials, "HealthCredentials");
-            createBar(hackMethods.Passwords, "Passwords");
+            createBar(hackMethods.healthcare, "healthcare");
+            createBar(hackMethods.media, "media");
+            createBar(hackMethods.financial, "financial");
+            createBar(hackMethods.web, "web");
+            createBar(hackMethods.retail, "retail");
+            createBar(hackMethods.tech, "tech");
+            createBar(hackMethods.government, "government");
+            createBar(hackMethods.academic, "academic");
+            createBar(hackMethods.telecoms, "telecoms");
 
             function getTotalMethodCount(data) {
                 return data.accidental + data.hacked + data.inside_job + data.lost_stolen + data.poor_security;
             }
 
             function updateHelper(stolenDataOfI) {
-                switch (stolenDataOfI.DataType) {
-                    case "Fullz":
-                        updateCount(hackMethods.Fullz, stolenData[i].Method);
+                switch (stolenDataOfI.Category) {
+                    case "healthcare":
+                        updateCount(hackMethods.healthcare, stolenData[i].Method);
                         break;
-                    case "BankAccount":
-                        updateCount(hackMethods.BankAccount, stolenData[i].Method);
+                    case "media":
+                        updateCount(hackMethods.media, stolenData[i].Method);
                         break;
-                    case "FreshCreditCard":
-                        updateCount(hackMethods.FreshCreditCard, stolenData[i].Method);
+                    case "financial":
+                        updateCount(hackMethods.financial, stolenData[i].Method);
                         break;
-                    case "StaleCreditCard":
-                        updateCount(hackMethods.StaleCreditCard, stolenData[i].Method);
+                    case "web":
+                        updateCount(hackMethods.web, stolenData[i].Method);
                         break;
-                    case "HealthCredentials":
-                        updateCount(hackMethods.HealthCredentials, stolenData[i].Method);
+                    case "retail":
+                        updateCount(hackMethods.retail, stolenData[i].Method);
                         break;
-                    case "Passwords":
-                        updateCount(hackMethods.Passwords, stolenData[i].Method);
+                    case "tech":
+                        updateCount(hackMethods.tech, stolenData[i].Method);
                         break;
-                    case "Other":
-                        updateCount(hackMethods.Other, stolenData[i].Method);
+                    case "government":
+                        updateCount(hackMethods.government, stolenData[i].Method);
+                        break;
+                    case "academic":
+                        updateCount(hackMethods.academic, stolenData[i].Method);
+                        break;
+                    case "telecoms":
+                        updateCount(hackMethods.telecoms, stolenData[i].Method);
                         break;
                 }
             }
