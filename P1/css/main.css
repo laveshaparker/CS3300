@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    font-family: "Open Sans", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+    h1 {
+        font-size: 4em;
+        letter-spacing: 2px;
+    }
+
+    h2 {
+        font-size: 3em;
+    }
+
+    h3 {
+        font-size: 2em;
+    }
+
+/*
+h1 {
+    color: rgb(238, 63, 34);
+}
+
+h2, p {
+    color: rgb(50, 86, 128);
+}*/
+
+.panel {
+    width: 100%;
+    clear: both;
+    position: relative;
+    overflow: visible;
+    text-align: center;
+}
+
+    .panel.more {
+        height: 125%;
+    }
+
+    .panel.full {
+        height: 100%;
+    }
+
+    .panel.less {
+        height: 75%;
+    }
+
+    .panel.half {
+        height: 50%;
+    }
+
+    .panel.sliver {
+        height: 25%;
+    }
+
+    .panel > div {
+        padding: 3%;
+    }
+
+.information {
+    height: 100%;
+    width: 35%;
+    float: left;
+    text-align: justify;
+}
+
+    .information {
+        background-color: rgb(253, 246, 227);
+    }
+
+.visualization {
+    height: 100%;
+    float: left;
+    text-align: center;
+}
+
+    .visualization.full {
+        width: 100%;
+    }
+
+    .visualization.less {
+        width: 65%;
+    }
+
+.info {
+    background-image: url("../images/worn_dots.png");
+    padding: 3%;
+    font-size: 
+}
+
+#data-compromised svg {
+    margin: 10px;
+    background-color: red;
+    width: 200;
+    height: 200;
+}
+

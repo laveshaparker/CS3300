@@ -5,54 +5,90 @@
         
         <script src="js/d3.v3.min.js"></script>
         <script src="js/radialBarChart.js"></script>
-        
-        <style>
-            /* put a border around the svg element so we can see the coordinate system better. */
-            body { font-family: "Open Sans"; } div { margin: 30px; }
-            svg { border: solid black 1px; }
-            /* The default styles for axis elements stink. What should they be? */
-            .axis path { fill: none; stroke: #777; }
-            .axis line { stroke: #777; }
-            
-            #chart {
-              font-family: "Palatino";
-              font-size: 14px;
-            }
-            #chart path {
-              fill: none;
-            }
-
-            /* Outer circle, tick-circles and spokes */
-            #chart circle.outer {
-              stroke: #aaa;
-              stroke-width: 5px;
-              opacity: 0.5;
-            }
-            #chart .tick-circles circle {
-              stroke: #ddd;
-              stroke-dasharray: 2, 2;  
-            }
-            #chart .spokes line {
-              stroke: #666;
-              stroke-width: 0.2;
-            }
-
-            /* Labels */
-            #chart .labels text {
-              fill: #333;
-              font-size: 12px;
-              font-weight: 1000;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/data-visualizations.css">
     </head>
 <body>
+    <div id="intro" class="panel half">
+        <h1>The Business of Data Breaches</h1>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lorem mauris, cursus id nisi nec, ultricies tincidunt ante. In volutpat ex odio, sit amet sagittis nibh efficitur ut. Duis non lorem felis. Donec placerat lacinia massa ut pulvinar. Nulla rhoncus massa eu ante pharetra, eu eleifend magna pulvinar. Duis egestas augue vitae nisi laoreet iaculis eget nec elit. Proin vel finibus orci, sed blandit turpis. Phasellus pretium vitae velit a placerat. Nunc et pharetra magna. Sed fermentum a lorem quis scelerisque. Mauris sollicitudin convallis libero ut pulvinar. Sed sagittis ligula sit amet dolor rhoncus lacinia sed in nisl. Nullam at nunc nec neque pellentesque aliquam at et augue.
+        </p>
+    </div>
 
-    <div id="canvas"></div>
-    <div id="canvas2"></div>
-    <div id="chart"></div>
+    <div id="examine" class="panel sliver info">
+        <h2>Let's examine data breaches in an intuitive way, in terms of the number of records compromised.</h2>
+    </div>
+
+    <div id="records" class="panel more">
+        <div class="visualization full">
+            <div id="canvas"></div>
+            <div id="canvas2"></div>
+        </div>
+    </div>
+
+    <div id="money-intro" class="panel less">
+        <div class="visualization less">
+            <div id="chart"></div>
+        </div>
+
+        <div class="information">
+            <h3>But how does that relate to money?</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lorem mauris, cursus id nisi nec, ultricies tincidunt ante. In volutpat ex odio, sit amet sagittis nibh efficitur ut. Duis non lorem felis. Donec placerat lacinia massa ut pulvinar. Nulla rhoncus massa eu ante pharetra, eu eleifend magna pulvinar. Duis egestas augue vitae nisi laoreet iaculis eget nec elit.</p>
+        </div>
+    </div>
+
+    <div id="money-and-records" class="panel less">
+        <div class="visualization less">
+            <img src="images/streamgraph.png"/>
+        </div>
+
+        <div class="information">
+            <h3>Let's revisit the size of these losses in terms of what buyers are willing to pay on the black market, on average:</h3>
+            <p>The graph at its thickest point represents 1.9B USD in of worth on the black market, and 55M USD at its thinnest.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lorem mauris, cursus id nisi nec, ultricies tincidunt ante. In volutpat ex odio, sit amet sagittis nibh efficitur ut. Duis non lorem felis. Donec placerat lacinia massa ut pulvinar. Nulla rhoncus massa eu ante pharetra. </p>
+        </div>
+    </div>
+
+    <div id="compromised" class="panel sliver info">
+        <h2>So how is this data compromised?</h2>
+    </div>
+
+    <div id="data-compromised" class="panel more">
+        <div class="visualization less">
+            <!-- <img src="images/bar-radar-alternate.png" /> -->
+            <svg id="Fullz"></svg>
+            <svg id="BankAccount"></svg>
+            <svg id="FreshCreditCard"></svg>
+            <svg id="StaleCreditCard"></svg>
+            <svg id="HealthCredentials"></svg>
+            <svg id="Passwords"></svg>
+                
+        </div>
+
+        <div class="information">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lorem mauris, cursus id nisi nec, ultricies tincidunt ante. In volutpat ex odio, sit amet sagittis nibh efficitur ut. Duis non lorem felis. Donec placerat lacinia massa ut pulvinar. Nulla rhoncus massa eu ante pharetra. </p>
+        </div>
+    </div>
+
     
     <script>
         var stolenData;
+        var accidental = 0,
+            hacked = 1,
+            inside_job = 2,
+            lost_stolen = 3,
+            poor_security = 4;
+
+        var hackMethods = {
+            "Fullz" : [0, 0, 0, 0, 0],
+            "BankAccount" : [0, 0, 0, 0, 0],
+            "FreshCreditCard"  : [0, 0, 0, 0, 0],
+            "StaleCreditCard" : [0, 0, 0, 0, 0],
+            "HealthCredentials" : [0, 0, 0, 0, 0],
+            "Passwords" : [0, 0, 0, 0, 0],
+            "Other" : [0, 0, 0, 0, 0],
+        };
         var colors     = ["aqua", "aquamarine",       "blue",  "blueviolet", "CadetBlue",     "Coral",   "DarkViolet",   "DeepPink",     "Gold",      "Tan",   "StaleGray",   "Salmon", "Red"];
         var categories = [ "web",     "retail", "healthcare",   "transport",      "tech", "financial",   "government",     "energy", "academic", "telecoms",      "gaming", "military", "media"];
 
@@ -75,7 +111,7 @@
                 return d.Year;
             });
 
-            var svg = d3.select("#canvas").append("svg")
+/*            var svg = d3.select("#canvas").append("svg")
             .attr("height", 400)
             .attr("width", 900);
 
@@ -137,6 +173,102 @@
                 .attr("r", 10)
                 .attr("opacity", 0.3)
                 .style("fill", function (d) {return colors[categories.indexOf(d.Category)]});
+*/
+
+            // Fourth graph
+            var toBeUpdated;
+
+            // Make a function. Need to clean this stuff up.
+            for (var i = 0; i < stolenData.length; i++) {
+                updateHelper(stolenData[i]);
+            };
+
+            createBar(hackMethods.Fullz, "Fullz");
+            createBar(hackMethods.BankAccount, "BankAccount");
+            createBar(hackMethods.FreshCreditCard, "FreshCreditCard");
+            createBar(hackMethods.StaleCreditCard, "StaleCreditCard");
+            createBar(hackMethods.HealthCredentials, "HealthCredentials");
+            createBar(hackMethods.Passwords, "Passwords");
+
+            function getTotalMethodCount(data) {
+                return data.accidental + data.hacked + data.inside_job + data.lost_stolen + data.poor_security;
+            }
+
+            function updateHelper(stolenDataOfI) {
+                switch (stolenDataOfI.DataType) {
+                    case "Fullz":
+                        updateCount(hackMethods.Fullz, stolenData[i].Method);
+                        break;
+                    case "BankAccount":
+                        updateCount(hackMethods.BankAccount, stolenData[i].Method);
+                        break;
+                    case "FreshCreditCard":
+                        updateCount(hackMethods.FreshCreditCard, stolenData[i].Method);
+                        break;
+                    case "StaleCreditCard":
+                        updateCount(hackMethods.StaleCreditCard, stolenData[i].Method);
+                        break;
+                    case "HealthCredentials":
+                        updateCount(hackMethods.HealthCredentials, stolenData[i].Method);
+                        break;
+                    case "Passwords":
+                        updateCount(hackMethods.Passwords, stolenData[i].Method);
+                        break;
+                    case "Other":
+                        updateCount(hackMethods.Other, stolenData[i].Method);
+                        break;
+                }
+            }
+
+            function updateCount(hackMethodsValue, method) {
+                switch (method) {
+                    case "accidental":
+                        hackMethodsValue[accidental] += 1;
+                        break;
+                    case "hacked":
+                        hackMethodsValue[hacked] += 1;
+                        break;
+                    case "inside_job":
+                        hackMethodsValue[inside_job] += 1;
+                        break;
+                    case "lost_stolen":
+                        hackMethodsValue[lost_stolen] += 1;
+                        break;
+                    case "poor_security":
+                        hackMethodsValue[poor_security] += 1;
+                        break;
+                    default:
+                        console.log("I encountered something I haven't seen before");
+                }
+            }
+
+            function createBar(data, id) {
+                var width = 20,
+                    barHeight = 20;
+
+                var x = d3.scale.linear()
+                    .domain([0, d3.max(data)])
+                    .range([0, width]);
+
+                var chart = d3.select("#" + id)
+                    .attr("width", width)
+                    .attr("height", barHeight * data.length);
+
+                var bar = chart.selectAll("g")
+                    .data(data)
+                  .enter().append("g")
+                    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+                bar.append("rect")
+                    .attr("width", x)
+                    .attr("height", barHeight - 1);
+
+                bar.append("text")
+                    .attr("x", function(d) { return x(d) + 3; })
+                    .attr("y", barHeight / 2)
+                    .attr("dy", ".35em")
+                    .text(function(d) { return d > 0 ? d : ""; });    
+           }
         });
 
         //Code for radial bar graph
@@ -155,6 +287,7 @@
             .datum(data)
             .call(chart);
         });
+
     </script>
 
 </body>
