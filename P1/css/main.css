@@ -80,7 +80,9 @@ h2, p {
 }
 
     .information {
-        background-color: rgb(253, 246, 227);
+        /*background-color: rgb(253, 246, 227);*/
+        /*background-image: url("../images/worn_dots.png");*/
+        background-color: rgb(250, 250, 250);
     }
 
 .visualization {
