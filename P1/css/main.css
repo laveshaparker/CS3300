@@ -31,15 +31,6 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 2em;
     }
 
-/*
-h1 {
-    color: rgb(238, 63, 34);
-}
-
-h2, p {
-    color: rgb(50, 86, 128);
-}*/
-
 .panel {
     width: 100%;
     clear: both;
@@ -104,10 +95,3 @@ h2, p {
     padding: 3%;
     font-size: 
 }
-
-#data-compromised svg {
-    margin: 10px;
-    width: 200;
-    height: 200;
-}
-

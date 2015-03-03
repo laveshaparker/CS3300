@@ -39,3 +39,19 @@
     font-size: 12px;
     font-weight: 1000;
 }
+
+#data-compromised svg {
+    margin: 10px;
+    width: 150;
+    height: 150;
+}
+
+/* The key for the fourth graph */
+#method-key {
+    height: 30px;
+}
+
+    #method-key .section {
+        width: 20%;
+        float: left;
+    }

@@ -54,11 +54,16 @@
         <h2>So how is this data compromised?</h2>
     </div>
 
-    <div id="data-compromised" class="panel full">
+    <div id="data-compromised" class="panel half">
         <div class="visualization less">
-            <!-- <img src="images/bar-radar-alternate.png" /> -->
+            <div id="method-key">
+                <div id="accidental" class="section"><p>Accidental</p></div>
+                <div id="hacked" class="section"><p>Hacked</p></div>
+                <div id="inside_job" class="section"><p>Inside Job</p></div>
+                <div id="lost_stolen" class="section"><p>Lost or Stolen</p></div>
+                <div id="poor_security" class="section"><p>Poor Security</p></div>
+            </div>
             <svg id="healthcare"></svg>
-            <svg id="media"></svg>
             <svg id="financial"></svg>
             <svg id="web"></svg>
             <svg id="retail"></svg>
@@ -66,7 +71,6 @@
             <svg id="government"></svg>
             <svg id="academic"></svg>
             <svg id="telecoms"></svg>
-                
         </div>
 
         <div class="information">
@@ -82,10 +86,8 @@
             inside_job = 2,
             lost_stolen = 3,
             poor_security = 4;
-
         var hackMethods = {
             "healthcare" : [0, 0, 0, 0, 0],
-            "media" : [0, 0, 0, 0, 0],
             "financial"  : [0, 0, 0, 0, 0],
             "web" : [0, 0, 0, 0, 0],
             "retail" : [0, 0, 0, 0, 0],
@@ -178,7 +180,6 @@
                 .attr("r", 10)
                 .attr("opacity", 0.3)
                 .style("fill", function (d) {return colors[categories.indexOf(d.Category)]});
-
         });
 
         //Code for radial bar graph
@@ -203,7 +204,6 @@
             setMethodValues();
 
             createBar(hackMethods.healthcare, "healthcare");
-            createBar(hackMethods.media, "media");
             createBar(hackMethods.financial, "financial");
             createBar(hackMethods.web, "web");
             createBar(hackMethods.retail, "retail");
@@ -226,9 +226,6 @@
                 switch (stolenDataOfI.Category) {
                     case "healthcare":
                         updateCount(hackMethods.healthcare, stolenDataOfI.Method);
-                        break;
-                    case "media":
-                        updateCount(hackMethods.media, stolenDataOfI.Method);
                         break;
                     case "financial":
                         updateCount(hackMethods.financial, stolenDataOfI.Method);
@@ -277,7 +274,7 @@
             }
 
             function createBar(data, id) {
-                var width = 20,
+                var width = 50,
                     barHeight = 20;
 
                 var x = d3.scale.linear()
@@ -295,15 +292,33 @@
 
                 bar.append("rect")
                     .attr("width", x)
-                    .attr("height", barHeight - 1);
+                    .attr("height", barHeight - 1)
+                    .attr("fill", function(d, i) {
+                        return graphFourColors[i];
+                    });
 
                 bar.append("text")
                     .attr("x", function(d) { return x(d) + 3; })
                     .attr("y", barHeight / 2)
                     .attr("dy", ".35em")
-                    .text(function(d) { return d > 0 ? d : ""; });    
+                    .text(function(d) { return d; });
+
+                chart.append("text")    
+                    .attr("x", 0)
+                    .attr("y", barHeight * 5 + 10)
+                    .attr("dy", ".35em")
+                    .text(id);
            }
         });
+
+        var graphFourColors = ["Salmon", "Coral", "Gold", "Tan", "Gray"];
+
+        // Fourth graph's key
+        document.getElementById("accidental").style.backgroundColor = graphFourColors[accidental];
+        document.getElementById("hacked").style.backgroundColor = graphFourColors[hacked];
+        document.getElementById("inside_job").style.backgroundColor = graphFourColors[inside_job];
+        document.getElementById("lost_stolen").style.backgroundColor = graphFourColors[lost_stolen];
+        document.getElementById("poor_security").style.backgroundColor = graphFourColors[poor_security];
 
     </script>
 
