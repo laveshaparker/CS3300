@@ -1,2 +1,3 @@
 Sources:
 CSS and JS files for Radiual Bar Graph from: https://github.com/prcweb/d3-radialbar
+Legend from: https://www.mapbox.com/tilemill/docs/guides/advanced-legends/
