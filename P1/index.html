@@ -34,7 +34,7 @@
 
         <div class="information">
             <h3>But how does that relate to money?</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lorem mauris, cursus id nisi nec, ultricies tincidunt ante. In volutpat ex odio, sit amet sagittis nibh efficitur ut. Duis non lorem felis. Donec placerat lacinia massa ut pulvinar. Nulla rhoncus massa eu ante pharetra, eu eleifend magna pulvinar. Duis egestas augue vitae nisi laoreet iaculis eget nec elit.</p>
+            <p>The radial bar graph to the left represents the average cost in US dollars of the worth of stolen information on the black market. For instance, fresh credit cards cost an average of $32 on the black market.</p>
         </div>
     </div>
 
@@ -98,6 +98,8 @@
         };
         var colors     = ["aqua", "aquamarine",       "blue",  "blueviolet", "CadetBlue",     "Coral",   "DarkViolet",   "DeepPink",     "Gold",      "Tan",   "StaleGray",   "Salmon", "Red"];
         var categories = [ "web",     "retail", "healthcare",   "transport",      "tech", "financial",   "government",     "energy", "academic", "telecoms",      "gaming", "military", "media"];
+        var height = 425;
+        var width = 900;
         
         d3.json("data/StolenData.json", function (error, data) {
             //First Graph ranging to all stolen records
@@ -119,11 +121,27 @@
             });
 
             var svg = d3.select("#canvas").append("svg")
-            .attr("height", 400)
-            .attr("width", 900);
+            .attr("height", height)
+            .attr("width", width);
+            
+            svg.append("text")
+            .attr("class", "x label")
+            .attr("text-anchor", "middle")
+            .attr("x", width / 2)
+            .attr("y", height - 6)
+            .text("Years");
+            
+            svg.append("text")
+            .attr("class", "y label")
+            .attr("text-anchor", "middle")
+            .attr("y", height / 2 - 215)
+            .attr("x", -150)
+            .attr("dy", "1em")
+            .attr("transform", "rotate(-90)")
+            .text("Number of Stolen Records");
 
             var xScale = d3.scale.linear().domain([minYear - 1,maxYear + 1])
-            .range([100, 870])
+            .range([120, 870])
             var yScale = d3.scale.linear().domain([Math.pow(10,0), maxRecords]).range([370,30]);
             
             var xAxis = d3.svg.axis().scale(xScale)
@@ -136,7 +154,7 @@
             .attr("transform", "translate(0,370)")
             .call(xAxis);
             svg.append("g").attr("class", "axis")
-            .attr("transform", "translate(" + 100 + ",0)")
+            .attr("transform", "translate(" + 120 + ",0)")
             .call(yAxis);
             
             var contents = svg.append("g");
@@ -154,11 +172,11 @@
 
             //Second graph from only 1 to 1,000,000 records
             var svg2 = d3.select("#canvas2").append("svg")
-            .attr("height", 400)
-            .attr("width", 900);
+            .attr("height", height)
+            .attr("width", width);
 
             var xScale2 = d3.scale.linear().domain([minYear - 1,maxYear + 1])
-            .range([100, 870]);
+            .range([120, 870]);
             var yScale2 = d3.scale.linear().domain([0, 1000000]).range([370,30]);
             
             var xAxis2 = d3.svg.axis().scale(xScale2)
@@ -171,8 +189,24 @@
             .attr("transform", "translate(0,370)")
             .call(xAxis2);
             svg2.append("g").attr("class", "axis")
-            .attr("transform", "translate(" + 100 + ",0)")
+            .attr("transform", "translate(" + 120 + ",0)")
             .call(yAxis2);
+            
+            svg2.append("text")
+            .attr("class", "x label")
+            .attr("text-anchor", "middle")
+            .attr("x", width / 2)
+            .attr("y", height - 6)
+            .text("Years");
+            
+            svg2.append("text")
+            .attr("class", "y label")
+            .attr("text-anchor", "middle")
+            .attr("y", height / 2 - 215)
+            .attr("x", -150)
+            .attr("dy", "1em")
+            .attr("transform", "rotate(-90)")
+            .text("Number of Stolen Records");
             
             var contents2 = svg2.append("g");
             
