@@ -1,4 +1,3 @@
-/* The default styles for axis elements stink. What should they be? */
 .axis path { 
     fill: none; stroke: #777; 
 }
@@ -9,7 +8,8 @@
 
 #chart {
     font-family: "Palatino";
-    font-size: 14px;
+    font-size: 18px;
+    fill: DarkGray;
 }
 
 #chart path {
@@ -20,12 +20,12 @@
 #chart circle.outer {
     stroke: #aaa;
     stroke-width: 5px;
-    opacity: 0.5;
+    opacity: 0.75;
 }
 
 #chart .tick-circles circle {
     stroke: #ddd;
-    stroke-dasharray: 2, 2;  
+    stroke-dasharray: 2, 2;
 }
 
 #chart .spokes line {
@@ -36,7 +36,7 @@
 /* Labels */
 #chart .labels text {
     fill: #333;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 1000;
 }
 
