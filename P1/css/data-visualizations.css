@@ -71,12 +71,11 @@
   .my-legend .legend-scale ul li {
     display: block;
     float: left;
-    width: 50px;
+    width: 500px;
     margin-bottom: 6px;
     text-align: center;
-    font-size: 50%;
+    font-size: 75%;
     list-style: none;
-    text-align: center;
     }
   .my-legend ul.legend-labels li span {
     display: block;

@@ -9,39 +9,42 @@
         <link rel="stylesheet" type="text/css" href="css/data-visualizations.css">
     </head>
 <body>
-    <div id="intro" class="panel half">
+    <div id="intro" class="panel sliver">
         <h1>The Business of Data Breaches</h1>
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lorem mauris, cursus id nisi nec, ultricies tincidunt ante. In volutpat ex odio, sit amet sagittis nibh efficitur ut. Duis non lorem felis. Donec placerat lacinia massa ut pulvinar. Nulla rhoncus massa eu ante pharetra, eu eleifend magna pulvinar. Duis egestas augue vitae nisi laoreet iaculis eget nec elit. Proin vel finibus orci, sed blandit turpis. Phasellus pretium vitae velit a placerat. Nunc et pharetra magna. Sed fermentum a lorem quis scelerisque. Mauris sollicitudin convallis libero ut pulvinar. Sed sagittis ligula sit amet dolor rhoncus lacinia sed in nisl. Nullam at nunc nec neque pellentesque aliquam at et augue.
+            We're trying to explore the correlation between data breaches and the worth of types of data on the black market. For instance, if health portfolios were worth a lot on the black market, would the amount of data breaches regarding healthcare companies be high as well?
         </p>
     </div>
 
     <div id="examine" class="panel sliver info">
         <h2>Let's examine data breaches in an intuitive way, in terms of the number of records compromised. </h2>
     </div>
+    
     <div class='my-legend'>
-    <div class='legend-title'>Category of Company</div>
-    <div class='legend-scale'>
-      <ul class='legend-labels'>
-        <li><span style='background:aqua;'></span>Web</li>
-        <li><span style='background:aquamarine;'></span>Retail</li>
-        <li><span style='background:blue;'></span>Healthcare</li>
-        <li><span style='background:BlueViolet;'></span>Transport</li>
-        <li><span style='background:CadetBlue;'></span>Technology</li>
-        <li><span style='background:coral;'></span>Financial</li>
-        <li><span style='background:DarkViolet;'></span>Government</li>
-        <li><span style='background:DeepPink;'></span>Energy</li>
-        <li><span style='background:Gold;'></span>Academic</li>
-        <li><span style='background:Tan;'></span>Telecoms</li>
-        <li><span style='background:Yellow;'></span>Gaming</li>
-        <li><span style='background:Salmon;'></span>Military</li>
-        <li><span style='background:Red;'></span>Media</li>
-      </ul>
+        <div class='legend-title'>Type of Company</div>
+            <div class='legend-scale'>
+              <ul class='legend-labels'>
+                <li><span style='background:aqua;'></span>Web</li>
+                <li><span style='background:aquamarine;'></span>Retail</li>
+                <li><span style='background:blue;'></span>Healthcare</li>
+                <li><span style='background:BlueViolet;'></span>Transport</li>
+                <li><span style='background:CadetBlue;'></span>Technology</li>
+                <li><span style='background:coral;'></span>Financial</li>
+                <li><span style='background:DarkViolet;'></span>Government</li>
+                <li><span style='background:DeepPink;'></span>Energy</li>
+                <li><span style='background:Gold;'></span>Academic</li>
+                <li><span style='background:Tan;'></span>Telecoms</li>
+                <li><span style='background:Yellow;'></span>Gaming</li>
+                <li><span style='background:Salmon;'></span>Military</li>
+                <li><span style='background:Red;'></span>Media</li>
+              </ul>
+            </div>
+        <div class='legend-source'>Source: <a href="#link to source">https://www.mapbox.com/tilemill/docs/guides/advanced-legends/</a></div>
     </div>
-    <div class='legend-source'>Source: <a href="#link to source">https://www.mapbox.com/tilemill/docs/guides/advanced-legends/</a></div>
-    </div>
+    
     <div id="records" class="panel more">
         <div class="visualization full">
+            <p> The first graph reflects all the whole range of records that were stolen from companies. Since there are many companies that had below 1 million records stolen, the second graph breaks it down further. </p>
             <div id="canvas"></div>
             <div id="canvas2"></div>
         </div>
@@ -54,7 +57,7 @@
 
         <div class="information">
             <h3>But how does that relate to money?</h3>
-            <p>The radial bar graph to the left represents the average cost in US dollars of the worth of stolen information on the black market. For instance, fresh credit cards cost an average of $32 on the black market.</p>
+            <p>The radial bar graph to the left represents the average cost in US dollars of the worth of stolen information on the black market. For instance, fresh credit cards cost an average of $32 on the black market. This makes sense because the more "fresh" a credit card is, the more vulnerable it is for thieves to steal money from it. From the graph, you can see that stale credit cards are worth six times less than a fresh one.</p>
         </div>
     </div>
 
@@ -162,7 +165,7 @@
 
             var xScale = d3.scale.linear().domain([minYear - 1,maxYear + 1])
             .range([120, 870])
-            var yScale = d3.scale.linear().domain([Math.pow(10,0), maxRecords]).range([370,30]);
+            var yScale = d3.scale.linear().domain([0, maxRecords]).range([370,30]);
             
             var xAxis = d3.svg.axis().scale(xScale)
             .orient("bottom")
