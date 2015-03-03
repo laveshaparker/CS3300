@@ -19,7 +19,27 @@
     <div id="examine" class="panel sliver info">
         <h2>Let's examine data breaches in an intuitive way, in terms of the number of records compromised.</h2>
     </div>
-
+    <div class='my-legend'>
+    <div class='legend-title'>Category of Company</div>
+    <div class='legend-scale'>
+      <ul class='legend-labels'>
+        <li><span style='background:aqua;'></span>Web</li>
+        <li><span style='background:aquamarine;'></span>Retail</li>
+        <li><span style='background:blue;'></span>Healthcare</li>
+        <li><span style='background:BlueViolet;'></span>Transport</li>
+        <li><span style='background:CadetBlue;'></span>Technology</li>
+        <li><span style='background:coral;'></span>Financial</li>
+        <li><span style='background:DarkViolet;'></span>Government</li>
+        <li><span style='background:DeepPink;'></span>Energy</li>
+        <li><span style='background:Gold;'></span>Academic</li>
+        <li><span style='background:Tan;'></span>Telecoms</li>
+        <li><span style='background:Yellow;'></span>Gaming</li>
+        <li><span style='background:Salmon;'></span>Military</li>
+        <li><span style='background:Red;'></span>Media</li>
+      </ul>
+    </div>
+    <div class='legend-source'>Source: <a href="#link to source">https://www.mapbox.com/tilemill/docs/guides/advanced-legends/</a></div>
+    </div>
     <div id="records" class="panel more">
         <div class="visualization full">
             <div id="canvas"></div>
@@ -71,8 +91,8 @@
             <svg id="government"></svg>
             <svg id="academic"></svg>
             <svg id="telecoms"></svg>
-        </div>
-
+            </div>
+            
         <div class="information">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lorem mauris, cursus id nisi nec, ultricies tincidunt ante. In volutpat ex odio, sit amet sagittis nibh efficitur ut. Duis non lorem felis. Donec placerat lacinia massa ut pulvinar. Nulla rhoncus massa eu ante pharetra. </p>
         </div>
@@ -96,7 +116,7 @@
             "academic" : [0, 0, 0, 0, 0],
             "telecoms" : [0, 0, 0, 0, 0],
         };
-        var colors     = ["aqua", "aquamarine",       "blue",  "blueviolet", "CadetBlue",     "Coral",   "DarkViolet",   "DeepPink",     "Gold",      "Tan",   "StaleGray",   "Salmon", "Red"];
+        var colors     = ["aqua", "aquamarine",       "blue",  "blueviolet", "CadetBlue",     "Coral",   "DarkViolet",   "DeepPink",     "Gold",      "Tan",   "Yellow",   "Salmon", "Red"];
         var categories = [ "web",     "retail", "healthcare",   "transport",      "tech", "financial",   "government",     "energy", "academic", "telecoms",      "gaming", "military", "media"];
         var height = 425;
         var width = 900;
