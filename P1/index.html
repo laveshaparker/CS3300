@@ -123,11 +123,12 @@
             .attr("width", 900);
 
             var xScale = d3.scale.linear().domain([minYear - 1,maxYear + 1])
-            .range([100, 870]);
-            var yScale = d3.scale.linear().domain([0, maxRecords]).range([370,30]);
+            .range([100, 870])
+            var yScale = d3.scale.linear().domain([Math.pow(10,0), maxRecords]).range([370,30]);
             
             var xAxis = d3.svg.axis().scale(xScale)
-            .orient("bottom");
+            .orient("bottom")
+            .tickFormat(d3.format("d"));
             var yAxis = d3.svg.axis().scale(yScale)
             .orient("left");
             
@@ -159,7 +160,8 @@
             var yScale2 = d3.scale.linear().domain([0, 1000000]).range([370,30]);
             
             var xAxis2 = d3.svg.axis().scale(xScale2)
-            .orient("bottom");
+            .orient("bottom")
+            .tickFormat(d3.format("d"));
             var yAxis2 = d3.svg.axis().scale(yScale2)
             .orient("left");
             
