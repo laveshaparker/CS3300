@@ -32,6 +32,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
 .panel {
+    display: inline-block;
     width: 100%;
     clear: both;
     position: relative;
@@ -71,8 +72,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
     .information {
-        /*background-color: rgb(253, 246, 227);*/
-        /*background-image: url("../images/worn_dots.png");*/
         background-color: rgb(250, 250, 250);
     }
 
@@ -86,12 +85,8 @@ h1, h2, h3, h4, h5, h6 {
         width: 100%;
     }
 
-    .visualization.less {
-        width: 65%;
-    }
 
 .info {
-    background-image: url("../images/worn_dots.png");
     padding: 3%;
     font-size: 
 }

@@ -93,3 +93,8 @@
   .my-legend a {
     color: #777;
     }
+
+#money {
+    height: 600px;
+    width: 600px;
+}

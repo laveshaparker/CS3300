@@ -5,6 +5,7 @@
         
         <script src="js/d3.v3.min.js"></script>
         <script src="js/radialBarChart.js"></script>
+        <script src="js/graphThree.js"></script>
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/data-visualizations.css">
     </head>
@@ -51,25 +52,17 @@
     </div>
 
     <div id="money-intro" class="panel less">
-        <div class="visualization less">
+        <h3>But how does that relate to money?</h3>
+            <p>The radial bar graph below represents the average cost in US dollars of the worth of stolen information on the black market. For instance, fresh credit cards cost an average of $32 on the black market. This makes sense because the more "fresh" a credit card is, the more vulnerable it is for thieves to steal money from it. From the graph, you can see that stale credit cards are worth six times less than a fresh one.</p>
+        <div class="visualization full">
             <div id="chart"></div>
-        </div>
-
-        <div class="information">
-            <h3>But how does that relate to money?</h3>
-            <p>The radial bar graph to the left represents the average cost in US dollars of the worth of stolen information on the black market. For instance, fresh credit cards cost an average of $32 on the black market. This makes sense because the more "fresh" a credit card is, the more vulnerable it is for thieves to steal money from it. From the graph, you can see that stale credit cards are worth six times less than a fresh one.</p>
         </div>
     </div>
 
-    <div id="money-and-records" class="panel less">
-        <div class="visualization less">
-            <img src="images/streamgraph.png"/>
-        </div>
-
-        <div class="information">
-            <h3>Let's revisit the size of these losses in terms of what buyers are willing to pay on the black market, on average:</h3>
-            <p>The graph at its thickest point represents 1.9B USD in of worth on the black market, and 55M USD at its thinnest.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lorem mauris, cursus id nisi nec, ultricies tincidunt ante. In volutpat ex odio, sit amet sagittis nibh efficitur ut. Duis non lorem felis. Donec placerat lacinia massa ut pulvinar. Nulla rhoncus massa eu ante pharetra. </p>
+    <div id="money-and-records" class="panel full">
+        <h3>Let's revisit the size of these losses in terms of what buyers are willing to pay on the black market, on average:</h3>
+        <div class="visualization full">
+            <svg id="money"></svg>
         </div>
     </div>
 
@@ -78,7 +71,7 @@
     </div>
 
     <div id="data-compromised" class="panel half">
-        <div class="visualization less">
+        <div class="visualization full">
             <div id="method-key">
                 <div id="accidental" class="section"><p>Accidental</p></div>
                 <div id="hacked" class="section"><p>Hacked</p></div>
@@ -95,15 +88,37 @@
             <svg id="academic"></svg>
             <svg id="telecoms"></svg>
             </div>
-            
-        <div class="information">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lorem mauris, cursus id nisi nec, ultricies tincidunt ante. In volutpat ex odio, sit amet sagittis nibh efficitur ut. Duis non lorem felis. Donec placerat lacinia massa ut pulvinar. Nulla rhoncus massa eu ante pharetra. </p>
-        </div>
+         
     </div>
 
     
     <script>
         var stolenData;
+        var healthcare = 0,
+            financial = 1,
+            retail = 2,
+            government = 3;
+
+        var yearAndAmtLost = {
+                "2004" : [0, 0, 0, 0],
+                "2005" : [0, 0, 0, 0],
+                "2006" : [0, 0, 0, 0],
+                "2007" : [0, 0, 0, 0],
+                "2008" : [0, 0, 0, 0],
+                "2009" : [0, 0, 0, 0],
+                "2010" : [0, 0, 0, 0],
+                "2011" : [0, 0, 0, 0],
+                "2012" : [0, 0, 0, 0],
+                "2013" : [0, 0, 0, 0],
+                "2014" : [0, 0, 0, 0],
+                "2015" : [0, 0, 0, 0],
+        };
+
+        var bar1;
+
+        var totalYearAndAmtLost = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var rectangles;
+        var BMPrice;
         var accidental = 0,
             hacked = 1,
             inside_job = 2,
@@ -245,6 +260,8 @@
 
         //Code for radial bar graph
         d3.json('data/BMPrice.json', function(err, data) {
+            BMPrice = data;
+
             var chart = radialBarChart()
             .barHeight(220)
             .reverseLayerOrder(true)
@@ -260,8 +277,21 @@
             .call(chart);
         });
 
-        // Fourth graph
+        
         d3.json("data/StolenData.json", function (error, data) {
+        
+            // Fourth graph
+
+            var graphFourColors = ["Salmon", "Coral", "Gold", "Tan", "Gray"];
+
+            // Fourth graph's key
+            document.getElementById("accidental").style.backgroundColor = graphFourColors[accidental];
+            document.getElementById("hacked").style.backgroundColor = graphFourColors[hacked];
+            document.getElementById("inside_job").style.backgroundColor = graphFourColors[inside_job];
+            document.getElementById("lost_stolen").style.backgroundColor = graphFourColors[lost_stolen];
+            document.getElementById("poor_security").style.backgroundColor = graphFourColors[poor_security];
+
+
             setMethodValues();
 
             createBar(hackMethods.healthcare, "healthcare");
@@ -336,7 +366,7 @@
 
             function createBar(data, id) {
                 var width = 50,
-                    barHeight = 20;
+                     barHeight = 20;
 
                 var x = d3.scale.linear()
                     .domain([0, d3.max(data)])
@@ -368,18 +398,81 @@
                     .attr("x", 0)
                     .attr("y", barHeight * 5 + 10)
                     .attr("dy", ".35em")
-                    .text(id);
-           }
+                    .text(id);    
+            }
+
+            // END Fourth Graph
+         
+
+            setYearAndAmtLost();
+            setYearAndTotalAmt();
+            plotGraphThree();
+            
+            // "2007" : {"healthcare" : 0,"financial" : 0,"retail" : 0,"government" : 0},
+
+            function setYearAndAmtLost() {
+                for (var i = 0; i < stolenData.length; i++) {
+                    d = stolenData[i];
+
+                    var idx;
+                    switch (d.Category) {
+                        case "healthcare":
+                            idx = healthcare;
+                            break;
+                        case "financial":
+                            idx = financial;
+                            break;
+                        case "retail":
+                            idx = retail;
+                            break;
+                        case "government":
+                            idx = government;
+                            break;
+                        default:
+                    }
+                    if (idx) {
+                        yearAndAmtLost[d.Year][idx] += d.StolenRecords * getBMP(d.Category);
+                    }
+                };
+            }
+
+            function setYearAndTotalAmt() {
+                totalYearAndAmtLost[0] = yearAndAmtLost["2004"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[1] = yearAndAmtLost["2005"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[2] = yearAndAmtLost["2006"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[3] = yearAndAmtLost["2007"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[4] = yearAndAmtLost["2008"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[5] = yearAndAmtLost["2009"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[6] = yearAndAmtLost["2010"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[7] = yearAndAmtLost["2011"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[8] = yearAndAmtLost["2012"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[9] = yearAndAmtLost["2013"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[10] = yearAndAmtLost["2014"].reduce(function(pv, cv) { return pv + cv; }, 0);
+                totalYearAndAmtLost[11] = yearAndAmtLost["2015"].reduce(function(pv, cv) { return pv + cv; }, 0);
+            }
+
+            function getBMP(dataCategory) {
+                switch (dataCategory) {
+                    case "healthcare":
+                        return 10;
+                        // return BMPrice.data["Health Credentials"];
+                    case "financial":
+                        return 5;
+                        // return BMPrice.data["Bank Account Details"];
+                    case "retail":
+                        return 32;
+                        // return BMPrice.data["Fresh Credit Card"];
+                    case "government":
+                        return 3;
+                        // return BMPrice.data["Fullz"];
+                    default:
+                        return 0;
+                }
+            }
+
+            
         });
 
-        var graphFourColors = ["Salmon", "Coral", "Gold", "Tan", "Gray"];
-
-        // Fourth graph's key
-        document.getElementById("accidental").style.backgroundColor = graphFourColors[accidental];
-        document.getElementById("hacked").style.backgroundColor = graphFourColors[hacked];
-        document.getElementById("inside_job").style.backgroundColor = graphFourColors[inside_job];
-        document.getElementById("lost_stolen").style.backgroundColor = graphFourColors[lost_stolen];
-        document.getElementById("poor_security").style.backgroundColor = graphFourColors[poor_security];
 
     </script>
 
