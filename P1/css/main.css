@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 2em;
     }
 
-.panel {
+/*.panel {
     display: inline-block;
     width: 100%;
     clear: both;
@@ -62,7 +62,7 @@ h1, h2, h3, h4, h5, h6 {
 
     .panel > div {
         padding: 3%;
-    }
+    }*/
 
 .information {
     height: 100%;
