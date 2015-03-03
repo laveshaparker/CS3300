@@ -98,7 +98,7 @@
         };
         var colors     = ["aqua", "aquamarine",       "blue",  "blueviolet", "CadetBlue",     "Coral",   "DarkViolet",   "DeepPink",     "Gold",      "Tan",   "StaleGray",   "Salmon", "Red"];
         var categories = [ "web",     "retail", "healthcare",   "transport",      "tech", "financial",   "government",     "energy", "academic", "telecoms",      "gaming", "military", "media"];
-
+        
         d3.json("data/StolenData.json", function (error, data) {
             //First Graph ranging to all stolen records
             stolenData = data;
@@ -139,6 +139,8 @@
             .attr("transform", "translate(" + 100 + ",0)")
             .call(yAxis);
             
+            var contents = svg.append("g");
+
             var contents = svg.append("g");
             
             var circles = svg.selectAll("circle").data(stolenData)
@@ -190,7 +192,7 @@
             .barHeight(220)
             .reverseLayerOrder(true)
             .capitalizeLabels(true)
-            .barColors(['#B66199', '#9392CB', '#76D9FA'])
+            .barColors(['#B66199', '#9392CB', '#76D9FA', 'LightSalmon'])
             .domain([0,35])
             .colorLabels(true)
             .tickValues([5,10,15,20,25,30])
